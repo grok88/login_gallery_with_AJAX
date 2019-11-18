@@ -87,19 +87,40 @@ BaseGallery.prototype = {
 		return dateB - dateA;
 	},
 	// Сортирует нашу галерею
-	sort : function(array){
-		let value = this.DOMElems.selectSort.value;
+	sort : function(value){
+
 		if (value == 1){
-			array.sort(this.compare);
+			let sortFunction = (array) => {
+                array.sort(this.compare);
+                return array;
+            }
+            this.insertDom(sortFunction);
 		} else if (value == 2){
-			array.sort(this.compareReverse);
+			let sortFunction = (array) => {
+                array.sort(this.compareReverse);
+                return array;
+            }
+            this.insertDom(sortFunction);
 		} else if (value == 3){
-			array = array.sort(this.compareDate);
+			let sortFunction = (array) => {
+                array.sort(this.compareDate);
+                return array;
+            }
+            this.insertDom(sortFunction);
 		} else if (value == 4){
-			array = array.sort(this.compareDateReverse);
+			let sortFunction = (array) => {
+                array.sort(this.compareDateReverse);
+                return array;
+            }
+            this.insertDom(sortFunction);
 		}
-		return array;
 	},
+	// Обработчик сортировки
+	sortHandler : function(e){
+		let target = e.target.value;
+		target && this.sort(target);
+	},
+
 	init : function (){
         if (this.DOMElems.count  + 1 === this.dataArr.length) {
             this.DOMElems.btn.style.backgroundColor = 'red';
@@ -111,6 +132,7 @@ BaseGallery.prototype = {
     },
 	initListeners : function (){
 		this.DOMElems.btn.addEventListener("click", this.init.bind(this));
+		this.DOMElems.selectSort.addEventListener('click', this.sortHandler.bind(this));
 	}
 }
 
@@ -122,13 +144,14 @@ let ExtendedGallery = function() {
 
 ExtendedGallery.prototype = {
 	// Добавляет картинки в наш HTML
-	insertDom : function (){
+	insertDom : function (func){
 		let resultHTML = '';
 		if (this.DOMElems.count !== this.dataArr.length + 1) {
 			
-			let rez = this.sort(this.dataArr);
-			
-			rez.forEach((elem, index) => {
+			let arr = this.dataArr;
+			func &&  (arr = func(arr));
+
+			arr.forEach((elem, index) => {
 				if (index < this.DOMElems.count){
 					resultHTML += `<div class="col-sm-3 col-xs-6">\
 										<img src="${elem.url}" alt="${elem.name}" class="img-thumbnail">\
