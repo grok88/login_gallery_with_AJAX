@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Форма входа</title>
+<!-- 
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow hide" id='user-panel'>
+      <h5 class="my-0 mr-md-auto font-weight-normal">JSExpert</h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark gallery-link" href="#">Галлерея</a>
+        <a class="p-2 text-dark user-link" href="#">О пользователе</a>
+      </nav>
+      <a class="btn btn-outline-primary out exit-link" href="#">Выход</a>
+    </div>
+
+    <main class="text-center" role="main">
+      <div class="alert alert-danger hidden" id='loginAlertInfo' role="alert">
+          This is a danger alert—check it out!
+      </div>
+
+      <form class="form-signin">
+
+          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> 
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="text" id="inputEmail" class="form-control" placeholder="Email address"  autofocus="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off">
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="text" id="inputPassword" class="form-control" placeholder="Password"  style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" autocomplete="off">
+          <div class="checkbox mb-3">
+              <label>
+                  <input type="checkbox" value="remember-me" class="remember"> Remember me
+              </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-input" type="submit">Sign in</button>
+          <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+      </form>
+  </main>
+
+
+    <main role="main" class="gal hide">
+      <section class="jumbotron text-center">
+        <div class="container">
+            <div class="row">
+              <h1 class="jumbotron-heading">Автомобильная галлерея</h1>
+              <p class="lead text-muted">На этой странице вы можете увидеть отличную галлерею, которая дает вам возможность ознакомится с нашим каталогом транспортных средств. </p>
+            </div>
+          
+            <div class="row">
+              <div class="col-lg-12 col-md-12 text-center">
+                  <button class="btn btn-default" type="button" id="add" data-toggle="tooltip" data-placement="left" title="" data-original-title="Добавить одно изображение">Добавить изображение</button>
+                  <p class="count-text">Добавленно изображений: <span id="count">0</span></p>
+                  <p class="">Осталось изображений: <span id="count-img">10</span></p>
+              </div>
+            </div>
+            
+            <div class="row text-center">
+              <div class="col-lg-12 col-md-12">
+                <select id="type-selector" class="form-control">
+                  <option  default value="1">По имени А — Я</option>
+                  <option value="2">По имени Я — А</option>
+                  <option value="3">Сначала новые</option>
+                  <option value="4">Сначала старые</option>
+                </select>
+                <br>
+                <br>
+                
+              </div>
+              <div class="row" id="result"></div>
+            </div>
+           <!--  <div class="row col-md-6">
+
+              <div class="btn-group" id="dropdown-name">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Фильтровать по имени
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Вперед: от А до Я</a>
+                    <a class="dropdown-item" href="#">Назад: от Я до А</a>                  
+                  </div>
+              </div>
+          </div>
+          
+          <div class="row col-md-5">
+              <div class="btn-group" id="dropdown-date">
+                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Фильтровать по дате
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" date-type="new" href="#">Сначала новые</a>
+                    <a class="dropdown-item" date-type="old" href="#">Сначала старые</a>                  
+                  </div>
+              </div>
+          </div> -->
+        </div>
+      </section>
+    </main>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://getbootstrap.com/assets/js/vendor/popper.min.js"></script>
+    <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script> -->
+    <script src=js/data.js defer></script>
+    <script src=js/database.js defer></script>
+    <script src=js/gallery.js defer></script>
+    <script src=js/validator.js defer></script>
+    <script src=js/login.js defer></script>
+    <script src=js/main.js defer></script>
+  </body>
+</html>
+
