@@ -53,43 +53,14 @@ BaseGallery.prototype = {
 		let result = this.editArr(newArr);	
 		return result;
 	},
-	//фУНКЦИЯ сравнения названия машин от А до Я
-	compare : function (a,b){
-		const nameA = a.name.toUpperCase();
-		const nameB = b.name.toUpperCase();
-		let comparison = 0;
-		if (nameA > nameB) {
-			comparison = 1;
-		} else if (nameA < nameB) {
-			comparison = -1;
-		}
-		return comparison;
-	},
-	compareReverse : function (a,b){
-		const nameA = a.name.toUpperCase();
-		const nameB = b.name.toUpperCase();
-		let comparison = 0;
-		if (nameA > nameB) {
-			comparison = 1;
-		} else if (nameA < nameB) {
-			comparison = -1;
-		}
-		return comparison * -1;
-	},
-	compareDate : function(a,b){
-		let dateA = new Date(a.dateTemp).getTime();
-		let dateB = new Date(b.dateTemp).getTime();;
-		return dateA - dateB;
-	},
-	compareDateReverse : function(a,b){
-		let dateA = new Date(a.dateTemp).getTime();
-		let dateB = new Date(b.dateTemp).getTime();;
-		return dateB - dateA;
-	},
 	// Сортирует нашу галерею
 	sort : function(value){
+		// писал представительный белый человек(но это неточно)
+		this.insertDom(config.configSevice[value]);
 
-		if (value == 1){
+		//  Индийский вариант
+
+		/* if (value == 1){
 			let sortFunction = (array) => {
                 array.sort(this.compare);
                 return array;
@@ -113,7 +84,7 @@ BaseGallery.prototype = {
                 return array;
             }
             this.insertDom(sortFunction);
-		}
+		} */
 	},
 	// Обработчик сортировки
 	sortHandler : function(e){
