@@ -1,25 +1,25 @@
-function Validator(){
-	this.DOMElems = {
-		form : document.querySelector('.form-signin'),
-		email : document.querySelector('#inputEmail'),
-		password : document.querySelector('#inputPassword'),
-		remember : document.querySelector('.remember'),
-		loginAlertInfo : document.querySelector('#loginAlertInfo'),
-		main : document.querySelector('main'),
-		userLink : document.querySelectorAll('.user-link'),
-		gall : document.querySelector('.gal'),
-		userLink : document.querySelector('.user-link'),
-		galleryLink : document.querySelector('.gallery-link')
+class Validator{
+	constructor(){
+		this.DOMElems = {
+			form : document.querySelector('.form-signin'),
+			email : document.querySelector('#inputEmail'),
+			password : document.querySelector('#inputPassword'),
+			remember : document.querySelector('.remember'),
+			loginAlertInfo : document.querySelector('#loginAlertInfo'),
+			main : document.querySelector('main'),
+			userLink : document.querySelectorAll('.user-link'),
+			gall : document.querySelector('.gal'),
+			userLink : document.querySelector('.user-link'),
+			galleryLink : document.querySelector('.gallery-link')
+		}
 	}
-}
 
-Validator.prototype = {
 	//edit pass
-	editPass : function(pass){
+	editPass (pass){
 		return pass.replace(/./g,'*');
-	},
-	// Show - hide pass
-	showHidePass : function(e){
+	}
+
+	showHidePass(e){
 		let target = e.target;
 		if (target.id !== 'btn-pass') return;
 		
@@ -36,9 +36,10 @@ Validator.prototype = {
 		}
 
 		btnPass.classList.toggle('hideBtn');
-	},
+	}
+
 	//Add User info
-	addUserInfo : function(login,pass){
+	addUserInfo(login,pass){
 		if(document.querySelector('.user-info')) document.querySelector('.user-info').remove();
 		console.log(1);
 		const div = document.createElement('div');
@@ -74,9 +75,10 @@ Validator.prototype = {
 
 		this.DOMElems.main.append(div);
 		return true;
-	},
+	}
+
 	//checkUSers
-	checkUsers : function(login,pass){
+	checkUsers(login,pass){
 		let loginVal = login.toLowerCase();
 		let passVal = pass.toLowerCase();
 
@@ -99,9 +101,10 @@ Validator.prototype = {
 			this.showAlertInfo('Неправильный логин или пароль', 'alert-warning');
 			setTimeout(() => this.DOMElems.loginAlertInfo.classList.add('hidden'),3000);
 		};
-	},
+	}
+
 	// BackBtn
-	BackBtn : function (e){
+	BackBtn(e){
 		let target = e.target;
 
 		if (target.id !== 'btn-back') return;
@@ -115,21 +118,21 @@ Validator.prototype = {
 
 		this.DOMElems.galleryLink.style.textDecoration = 'underline';
 		this.DOMElems.galleryLink.style.color = 'red';
-	},
-	
-	checkCorrectLogin : function (login) {
+	}
+
+	checkCorrectLogin (login) {
 		const regLogin = /^([a-z0-9_-]+)@([\da-z.-]+).([a-z.]{2,6})$/;
 		return regLogin.test(login);
-	},
+	}
 
-	showAlertInfo : function(str, classAlert){
+	showAlertInfo (str, classAlert){
 		if (!classAlert) classAlert = 'alert-info';
 		this.DOMElems.loginAlertInfo.classList.remove('alert-warning','alert-danger','alert-info','hidden');
 		this.DOMElems.loginAlertInfo.classList.add(classAlert);
 		this.DOMElems.loginAlertInfo.innerHTML = str;
-	},
+	}
 	
-	handler : function (loginValue,passValue){
+	handler(loginValue,passValue){
 
 		if(this.checkCorrectLogin(loginValue)){
 			if (passValue.length < 8){
@@ -146,14 +149,16 @@ Validator.prototype = {
 			this.showAlertInfo('Некоректный login','alert-warning');
 			return false;
 		}		
-	},
+	}
+
 	//setLogAndPass 
-	setLogAndPass : function(database){
+	setLogAndPass(database){
 		let res = JSON.stringify(database);
 		localStorage.setItem('checkUser',res);
-	},
+	}
+
 	// save login and pass to local storage
-	rememberLS : function(e){
+	rememberLS(e){
 		if (this.DOMElems.remember.checked){
 			const loginValue = this.DOMElems.email.value;
 			const passValue = this.DOMElems.password.value;
@@ -163,18 +168,20 @@ Validator.prototype = {
 		} else {
 			localStorage.removeItem('temp');
 		}
-	},	
-	tempShow : function(e){
+	}
+	
+	tempShow (e){
 		if (localStorage.getItem('temp') === null) return;
 		let [login, pass] = JSON.parse(localStorage.getItem('temp'));
 		this.DOMElems.email.value = login;
 		this.DOMElems.password.value = pass;
-	},
+	}
 	//load all Events
-	initial : function(){
+	initial(){
 		document.addEventListener('DOMContentLoaded', this.tempShow.bind(this));
 		this.DOMElems.main.addEventListener('click', this.showHidePass.bind(this));
 		this.DOMElems.main.addEventListener('click', this.BackBtn.bind(this));
 		this.DOMElems.remember.addEventListener('change', this.rememberLS.bind(this));
 	}
+
 }

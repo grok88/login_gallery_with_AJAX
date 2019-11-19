@@ -1,15 +1,13 @@
 /* 
 *  Схематическое изображение класса Логин формы
 */
-
-let LoginForm = function (validatorModule, galleryModule) {	
-	this.validator = validatorModule;
-	this.gallery = galleryModule;
-}
-
-LoginForm.prototype = {
-
-	initComponent : function (){
+class LoginForm {
+	constructor (validatorModule, galleryModule){
+		this.validator = validatorModule;
+		this.gallery = galleryModule;
+	}	
+	
+	initComponent (){
 		this.email = document.querySelector('#inputEmail');
 		this.password = document.querySelector('#inputPassword');
 		this.btnInput = document.querySelector('.btn-input');
@@ -21,9 +19,9 @@ LoginForm.prototype = {
 		this.exit = document.querySelector('.exit-link');
 
 		this.validateUserData();
-	},
+	}
 	
-	validateUserData : function (){
+	validateUserData (){
 		this.validator.setLogAndPass(database);
 		this.validator.initial();
 
@@ -32,9 +30,9 @@ LoginForm.prototype = {
 		this.galleryLink.addEventListener('click',this.galleryLinkClick.bind(this));
 		this.exit.addEventListener('click', this.exitUser.bind(this));
 		//document.body.addEventListener('click',this.backButton.bind(this));
-	},
+	}
 
-	btnSubmit : function(e){
+	btnSubmit (e){
 		if (localStorage.getItem('check') === true)  return;
 		
 		if (this.validator.handler(this.email.value,this.password.value)){
@@ -43,14 +41,14 @@ LoginForm.prototype = {
 		}
 
 		e.preventDefault();
-	},
+	}
 
-	enterTrue : function(){
+	enterTrue (){
 		this.validator.showAlertInfo('start gallery','alert-success');
 		setTimeout(this.closeLogin.bind(this),1000);
-	},
+	}
 
-	closeLogin : function(){
+	closeLogin (){
 		this.form.classList.add('hide');
 		this.gall.classList.remove('hide');
 		this.userPanel.classList.remove('hide');
@@ -59,8 +57,9 @@ LoginForm.prototype = {
 		this.galleryLink.style.color = 'red';
 		this.gallery.initListeners();
 
-	},
-	userLinkInfo : function(){
+	}
+	
+	userLinkInfo (){
 		
 		this.galleryLink.style.textDecoration = 'inherit';
 		this.galleryLink.style.color = 'inherit';
@@ -71,8 +70,9 @@ LoginForm.prototype = {
 		this.gall.classList.add('hide');
 		
 		this.validator.addUserInfo(this.email.value,this.password.value);
-	},
-	galleryLinkClick : function(){
+	}
+
+	galleryLinkClick (){
 		this.userLink.style.textDecoration = 'inherit';
 		this.userLink.style.color = 'inherit';
 
@@ -81,9 +81,11 @@ LoginForm.prototype = {
 
 		document.querySelector('.user-info').classList.add('hide');
 		this.gall.classList.remove('hide');
-	},
-	exitUser : function(){
+	}
+
+	exitUser (){
 		document.location.reload(true);
 		localStorage.setItem('check','');
 	}
 }
+

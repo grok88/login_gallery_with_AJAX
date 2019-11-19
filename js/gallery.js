@@ -1,18 +1,17 @@
-let BaseGallery = function () {	
-	// DOM elements
-	this.DOMElems = {
-		btn : document.getElementById("add"),
-		output : document.querySelector('#result'),
-		countSpan : document.querySelector('#count'),
-		countImg : document.querySelector('#count-img'),
-		selectSort : document.querySelector('#type-selector'),
-		count : 0
-	};
-	this.dataArr = this.transform();
-}
-
-BaseGallery.prototype = {
-	getArr : function (node){
+class BaseGallery{	
+	constructor(){
+		this.DOMElems = {
+			btn : document.getElementById("add"),
+			output : document.querySelector('#result'),
+			countSpan : document.querySelector('#count'),
+			countImg : document.querySelector('#count-img'),
+			selectSort : document.querySelector('#type-selector'),
+			count : 0
+		};
+		this.dataArr = this.transform();
+	}
+	
+	getArr(node){
 		let newArr = [];
 		node.forEach(elem => {
 				newArr.push({
@@ -23,11 +22,13 @@ BaseGallery.prototype = {
 				});
 		});
 		return newArr;
-	},
-	getName : function(elem){
+	}
+	
+	getName(elem){
 		return elem.name[0] + elem.name.substr(1).toLowerCase();
-	},
-	getDate : function(elem){
+	}
+
+	getDate(elem){
 		let date = elem.date;
 		let tmpDate = new Date(date),
 			year  = tmpDate.getFullYear(),
@@ -36,8 +37,9 @@ BaseGallery.prototype = {
 			hours = tmpDate.getHours(),
 			minuts = tmpDate.getMinutes();
 		return `${year}/${mounth}/${day} ${hours}:${minuts}`;
-	},
-	editArr : function (arr){
+	}
+
+	editArr(arr){
 		return arr.map((elem) => {
 			return {
 				url : `http://${elem.url}`,
@@ -47,14 +49,16 @@ BaseGallery.prototype = {
 				dateTemp : elem.date
 			};
 		});
-	},
-	transform : function (){
+	}
+
+	transform (){
 		let newArr = this.getArr(data);
 		let result = this.editArr(newArr);	
 		return result;
-	},
+	}
+
 	// Сортирует нашу галерею
-	sort : function(value){
+	sort(value){
 		// писал представительный белый человек(но это неточно)
 		this.insertDom(config.configSevice[value]);
 
@@ -85,14 +89,15 @@ BaseGallery.prototype = {
             }
             this.insertDom(sortFunction);
 		} */
-	},
+	}
+
 	// Обработчик сортировки
-	sortHandler : function(e){
+	sortHandler(e){
 		let target = e.target.value;
 		target && this.sort(target);
-	},
-
-	init : function (){
+	}
+	
+	init(){
         if (this.DOMElems.count  + 1 === this.dataArr.length) {
             this.DOMElems.btn.style.backgroundColor = 'red';
         } else if (this.DOMElems.count === this.dataArr.length) {
@@ -100,22 +105,23 @@ BaseGallery.prototype = {
             return;
         }
         ++this.DOMElems.count;    
-    },
-	initListeners : function (){
+	}
+	
+	initListeners (){
 		this.DOMElems.btn.addEventListener("click", this.init.bind(this));
 		this.DOMElems.selectSort.addEventListener('click', this.sortHandler.bind(this));
 	}
 }
 
-
-let ExtendedGallery = function() {
-	BaseGallery.apply(this);
-	this.property = {};
-}
-
-ExtendedGallery.prototype = {
+class ExtendedGallery extends BaseGallery {
+	constructor(){
+		// BaseGallery.apply(this);
+		super();
+		this.property = {};
+	}
+	
 	// Добавляет картинки в наш HTML
-	insertDom : function (func){
+	insertDom(func){
 		let resultHTML = '';
 		if (this.DOMElems.count !== this.dataArr.length + 1) {
 			
@@ -138,12 +144,14 @@ ExtendedGallery.prototype = {
 			this.DOMElems.countSpan.textContent = this.DOMElems.count;
 			this.DOMElems.output.innerHTML = resultHTML;
 		} 
-    },
+	}
+	
 	// Показывает сколько картинок можно добавить
-	showImg : function (){
+	showImg(){
     	this.DOMElems.countImg.textContent = this.dataArr.length - this.DOMElems.count;
-    },	
-	deleteImg : function (e){
+	}
+	
+	deleteImg(e){
         let target = e.target;
         if (target.id != 'delete') return;
         let parent = target.closest('.col-sm-3');
@@ -152,32 +160,38 @@ ExtendedGallery.prototype = {
         this.DOMElems.countSpan.textContent = this.DOMElems.count;
         this.DOMElems.countImg.textContent = this.dataArr.length - this.DOMElems.count;
         this.DOMElems.btn.style.backgroundColor = "inherit";
-	},
-	init : function (){
-		BaseGallery.prototype.init.apply(this);
+	}
+
+	init(){
+		// BaseGallery.prototype.init.apply(this);
+		super.init();
 		this.insertDom();        
         this.showImg();
-	},
-	initListeners : function (){
-		BaseGallery.prototype.initListeners.apply(this);
+	}
+
+	initListeners(){
+		// BaseGallery.prototype.initListeners.apply(this);
+		super.initListeners();
 		document.addEventListener('click', this.deleteImg.bind(this));
     }
+
 }
 
-// код функции наследования можно найти архиве, который содержится 
 
-inheritance(BaseGallery, ExtendedGallery);
+// код функции наследования => for prototype
 
-function inheritance(parent, child){
-	let childTemp = child.prototype;
+// inheritance(BaseGallery, ExtendedGallery);
 
-	child.prototype = Object.create(parent.prototype);
-	child.prototype.constructor = child;
+// function inheritance(parent, child){
+// 	let childTemp = child.prototype;
 
-	for (let key in childTemp){
-		if (childTemp.hasOwnProperty(key)){
-			child.prototype[key] = childTemp[key];
-		}
-	}
-}
+// 	child.prototype = Object.create(parent.prototype);
+// 	child.prototype.constructor = child;
+
+// 	for (let key in childTemp){
+// 		if (childTemp.hasOwnProperty(key)){
+// 			child.prototype[key] = childTemp[key];
+// 		}
+// 	}
+// }
 
